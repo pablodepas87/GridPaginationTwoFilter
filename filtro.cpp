@@ -7,8 +7,10 @@ Filtro::Filtro(QObject *parent): QSortFilterProxyModel(parent)
   ,m_oggettiFilt(0)
   ,m_string("")
 {
-  this->setFilterRole(modello::RicettaUtente);
-  this->setDynamicSortFilter(true);
+    setFilterRole(modello::RicettaUtente);
+    //setSortRole(modello::NomeRicetta); // se attivo vengono ordinati in ordine alfabetico
+    setDynamicSortFilter(true);
+    sort(0);
 }
 
 Filtro::~Filtro()
@@ -68,7 +70,7 @@ bool Filtro::filterAcceptsRow(int source_row, const QModelIndex &source_parent) 
     if(showOnlyUserRic()==true) {
      // se devo visualizzare solo
      QModelIndex ricUtente = sourceModel()->index(source_row,0, source_parent); // vado a leggere singolarmente ogni riga del modello
-     QString stringaConfronto=sourceModel()->data(ricUtente,modello::NomeRicetta).toString();
+     QString stringaConfronto=sourceModel()->data(ricUtente,modello::NomeRicetta).toString(); // vado a prendermi il campo nome del record ricUtente
 
      if(sourceModel()->data(ricUtente,modello::RicettaUtente)==true && stringaConfronto.contains(regEx)==true)
      {
@@ -101,8 +103,8 @@ bool Filtro::lessThan(const QModelIndex &source_left, const QModelIndex &source_
     bool leftData= sourceModel()->data(source_left,modello::RicettaUtente).toBool(); // vado a leggere il valore RicettaUtente e lo trasformo in bool
     bool rightData=sourceModel()->data(source_right,modello::RicettaUtente).toBool(); // vado a leggere il valore RicettaUtente e lo trasformo in bool
 
-    if(leftData!=rightData )
-        return leftData;
+    if(rightData!= leftData )  // faccio cosi se voglio mettere prima quelli con il valore=false altrimenti inverto, anche il valore di return va invertito
+        return rightData;
     else {
         return QSortFilterProxyModel::lessThan(source_left, source_right);
     }

@@ -17,7 +17,7 @@ int main(int argc, char *argv[])
     for(int i=0;i<10;i++){
 
         mioModello.addRicetta("Pane","red",5,false);
-        mioModello.addRicetta("Branzino","orange",3,true);
+        mioModello.addRicetta("Ric Utente","orange",3,true);
 
     }
 

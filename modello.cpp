@@ -118,8 +118,13 @@ void modello::addRicetta(QString nomeRic, QString color,int durata,bool ricettaU
      beginInsertRows(QModelIndex(),rowCount(),rowCount());
      if(rowCount()==0)
        m_ricette << tileTmp;
-     else
-       m_ricette.insert(rowCount()-1,tileTmp);
+     else{
+         if(nomeRic=="Aggiungi Ricetta")
+             m_ricette.insert(rowCount(),tileTmp);
+         else
+             m_ricette.insert(rowCount()-1,tileTmp);
+     }
+
      endInsertRows();
 
      // mi serve per aggiornare in automatico il qml
